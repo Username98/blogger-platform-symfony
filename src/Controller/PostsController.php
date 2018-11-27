@@ -9,16 +9,20 @@
 namespace App\Controller;
 
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-class PostsController
+class PostsController extends AbstractController
 {
     /**
      * @Route("/posts", name="logout")
      */
     public function viewPost()
     {
-        return new Response("pidor");
+        $post1="vsem privet";
+        $post2="post2";
+        return $this->render('posts/posts.html.twig',array(
+            'post1' => $post1,
+            'post2' => $post2,
+        ));
     }
 }
