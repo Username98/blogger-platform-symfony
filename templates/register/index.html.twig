@@ -93,6 +93,7 @@
         height: auto;
         font-weight: normal;
         padding: 14px 0;
+        align-items: center;
         text-transform: uppercase;
         border-color: #1CB94A;
     }
@@ -151,11 +152,14 @@
                                 {#{%   if register_form is defined %}#}
                                 {{ form_start(register_form, {'attr': {'id': 'register-form', 'style' : 'display:'}}) }}
                                 <div class="form-group">
+                                    {#{{ form_row(register_form._username) }}#}
                                     {{ form_label(register_form._username) }}
+                                    {{ form_errors(register_form) }}
                                     {{ form_widget(register_form._username, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="form-group">
                                     {{ form_label(register_form.email) }}
+                                    {{ form_errors(register_form.email) }}
                                     {{ form_widget(register_form.email, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="form-group">
@@ -172,6 +176,7 @@
                                 </div>
                                     <div class="form-group">
                                         {{ form_label(register_form._password.second, 'Confirm Password') }}
+                                        {{ form_errors(register_form._password.first) }}
                                         {{ form_widget(register_form._password.second, {'attr': {'class': 'form-control'}}) }}
                                     </div>
                                 <div class="form-group text-center">
@@ -179,14 +184,16 @@
                                     {#<input type="checkbox" tabindex="3" class="" name="bloggerRequest" id="bloggerRequest">#}
                                     <label for="bloggerRequest"> I want to be a blogger</label>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group text-center">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" form="register-form" value="Register Now">
+                                            {{ form_widget(register_form.submit, {'attr': {'class': 'form-control btn btn-register'}, 'label': 'Register'}) }}
+                                            {#<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" form="register-form" value="Register Now">#}
                                         </div>
                                     </div>
                                 </div>
                                 {{ form_end(register_form) }}
+                            </div>
                                 {#{% endif %}#}
                             </div>
                         </div>

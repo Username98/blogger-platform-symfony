@@ -14,7 +14,9 @@ use Symfony\Component\DependencyInjection\Compiler\RepeatedPass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,8 +30,18 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('_password', RepeatedType::class)
-            ->add('requestedRole', CheckboxType::class);
+            ->add('_password', RepeatedType::class, [
+                'type' => PasswordType::class,
+            ])
+            ->add('requestedRole', CheckboxType::class, array(
+                'required' => false,
+                ))
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'value' => 'Register',
+                    'class' => 'form-control btn btn-register',
+                    ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
