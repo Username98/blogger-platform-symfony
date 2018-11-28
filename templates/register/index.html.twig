@@ -137,10 +137,10 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="{{ path('login') }}" class="active" id="login-form-link">Login</a>
+                                <a href="{{ path('login') }}" id="login-form-link">Login</a>
                             </div>
                             <div class="col-xs-6">
-                                <a href="{{ path('register') }}" id="register-form-link">Register</a>
+                                <a href="{{ path('register') }}" class="active" id="register-form-link">Register</a>
                             </div>
                         </div>
                         <hr>
@@ -148,49 +148,51 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                {% if form is defined %}
-                                {{ form_start(form, {'attr': {'id': 'login-form'}}) }}
+                                {#{%   if register_form is defined %}#}
+                                {{ form_start(register_form, {'attr': {'id': 'register-form', 'style' : 'display:'}}) }}
                                 <div class="form-group">
-                                    {{ form_label(form._username) }}
-                                    {{ form_widget(form._username, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_label(register_form._username) }}
+                                    {{ form_widget(register_form._username, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="form-group">
-                                    {{ form_label(form._password) }}
-                                    {{ form_widget(form._password, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_label(register_form.email) }}
+                                    {{ form_widget(register_form.email, {'attr': {'class': 'form-control'}}) }}
                                 </div>
+                                <div class="form-group">
+                                    {{ form_label(register_form.firstName) }}
+                                    {{ form_widget(register_form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(register_form.lastName) }}
+                                    {{ form_widget(register_form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(register_form._password.first, 'Password') }}
+                                    {{ form_widget(register_form._password.first, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                    <div class="form-group">
+                                        {{ form_label(register_form._password.second, 'Confirm Password') }}
+                                        {{ form_widget(register_form._password.second, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
                                 <div class="form-group text-center">
-                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                    <label for="remember"> Remember Me</label>
+                                    {{ form_widget(register_form.requestedRole) }}
+                                    {#<input type="checkbox" tabindex="3" class="" name="bloggerRequest" id="bloggerRequest">#}
+                                    <label for="bloggerRequest"> I want to be a blogger</label>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" form="login-form" value="Log In">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" form="register-form" value="Register Now">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{ form_end(form) }}
-                                {% endif %}
+                                {{ form_end(register_form) }}
+                                {#{% endif %}#}
                             </div>
                         </div>
                     </div>
                 </div>
-                {% if errors is defined and errors is not null %}
-                    <div class="alert alert-danger">{{ errors.messageKey }}</div>
-                {% endif %}
             </div>
         </div>
     </div>
-    {#{{ form_start(form) }}#}
-    {#{{ form_widget(form) }}#}
-    {#{{ form_end(form) }}#}
 {% endblock %}

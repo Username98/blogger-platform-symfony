@@ -23,10 +23,11 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                default_target_path: /login
 
             logout:
                 path: /logout
-                target: /
+                target: /login
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
