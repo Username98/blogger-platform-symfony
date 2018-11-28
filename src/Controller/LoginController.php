@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginForm;
+use App\Form\UserType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
@@ -15,36 +18,33 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction(Request $request, AuthenticationUtils $utils)
+    public function loginAction(Request $request, AuthenticationUtils $utils, UserPasswordEncoderInterface $encoder)
     {
-//        $user = new User();
-//        $form = $this->createFormBuilder($user)
-//            ->setAction($this->generateUrl('login'))
-//            ->setMethod('POST')
-//            ->add('email', TextType::class, array('attr' => array('name' => '_username', 'id' => 'username')))
-//            ->add('password', TextType::class, array('attr' => array('name' => '_password', 'id' => 'password')))
-//            ->add('Login', SubmitType::class, array('label' => 'Login'))
-//            ->getForm();
-//        $form->handleRequest($request);
         $errors = $utils->getLastAuthenticationError();
         $lastUsername = $utils->getLastUsername();
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $user = $form->getData();
-//            return $this->render('login/index.html.twig', array(
-//                'username' => $lastUsername,
-//                'password' => $user->getPassword(),
-//                'errors' => $errors,
-//                'form' => $form->createView(),
-//            ));
-////            return $this->redirectToRoute('login/index.html.twig');
-//        }
-        return $this->render('login/index.html.twig', array(
+        $form = $this->createForm(LoginForm::class, [
             'username' => $lastUsername,
+        ]);
+
+//        $em = $this->getDoctrine()->getManager();
+//        $user = new User();
+//        $register_form = $this->createForm(UserType::class, $user);
+//        $register_form->handleRequest($request);
+//        if ($register_form->isSubmitted() && $register_form->isValid())
+//        {
+//            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+//            $em->persist($user);
+//            $em->flush();
+//
+//            return $this->redirectToRoute('login');
+//        }
+
+
+        return $this->render('login/index.html.twig', array(
+            'form' => $form->createView(),
             'errors' => $errors,
+//            'register_form' => $register_form->createView(),
         ));
-//        return $this->render('login/index.html.twig', [
-//            'controller_name' => 'LoginController',
-//        ]);
     }
 
     /**
