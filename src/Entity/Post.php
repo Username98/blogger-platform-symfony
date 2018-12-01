@@ -17,6 +17,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    public function __construct()
+    {
+        $this->createDate = new \DateTime();
+        $this->likes = 0;
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -63,6 +69,7 @@ class Post
     /**
      * @return mixed
      */
+
     public function getId()
     {
         return $this->id;
@@ -122,14 +129,6 @@ class Post
     }
 
     /**
-     * @param mixed $likes
-     */
-    public function setLikes($likes): void
-    {
-        $this->likes = $likes;
-    }
-
-    /**
      * @return mixed
      */
     public function getAuthor()
@@ -154,14 +153,6 @@ class Post
     }
 
     /**
-     * @param mixed $createDate
-     */
-    public function setCreateDate($createDate): void
-    {
-        $this->createDate = $createDate;
-    }
-
-    /**
      * @return mixed
      */
     public function getImagePreview()
@@ -169,12 +160,15 @@ class Post
         return $this->imagePreview;
     }
 
-    /**
-     * @param mixed $imagePreview
-     */
-    public function setImagePreview($imagePreview): void
+
+    public function setImagePreview($imagePreview)
     {
         $this->imagePreview = $imagePreview;
+        return $this;
     }
 
+    public function generateUniqueFileName()
+    {
+        return md5(uniqid());
+    }
 }
