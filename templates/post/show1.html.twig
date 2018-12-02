@@ -91,7 +91,7 @@
                 </a>
                 <p class="post-meta">Posted by
                     <a href="#">{{ post.author }}</a>
-                    {{ post.createDate ? post.createDate|date('Y-m-d') : '' }}</p>
+                    {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
                 <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
             </div>
             <hr>

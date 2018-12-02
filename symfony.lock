@@ -98,6 +98,12 @@
     "jms/metadata": {
         "version": "1.7.0"
     },
+    "knplabs/knp-components": {
+        "version": "v1.3.10"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v2.8.0"
+    },
     "nelmio/cors-bundle": {
         "version": "1.5",
         "recipe": {
