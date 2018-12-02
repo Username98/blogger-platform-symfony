@@ -1,0 +1,14 @@
+parameters:
+  database_host: 127.0.0.1
+  database_port: null
+  database_name: bloggers_platform_db
+  database_user: root
+  database_password: root
+  mailer_transport: gmail
+  mailer_encryption: ssl
+#  mailer_auth_mode: login
+  mailer_port: 465
+  mailer_host: ssl://smtp.gmail.com
+  mailer_user: pivchenko.stas.1999@gmail.com
+  mailer_password: Stas_10041999
+  secret: e9c7804058f76f7695737a5955fbdc9f1a77fabc

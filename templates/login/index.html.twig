@@ -140,7 +140,7 @@
                                 <a href="{{ path('login') }}" class="active" id="login-form-link">Login</a>
                             </div>
                             <div class="col-xs-6">
-                                <a href="{{ path('register') }}" id="register-form-link">Register</a>
+                                <a href="{{ path('fos_user_registration_register') }}" id="register-form-link">Register</a>
                             </div>
                         </div>
                         <hr>
@@ -159,7 +159,7 @@
                                     {{ form_widget(form._password, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                 <div class="form-group text-center">
-                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                    <input type="checkbox" tabindex="3" class="" name="_remember_me" id="remember">
                                     <label for="remember"> Remember Me</label>
                                 </div>
                                 <div class="form-group">

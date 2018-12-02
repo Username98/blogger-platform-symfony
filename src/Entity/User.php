@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Validator\Constraints;
@@ -22,54 +23,59 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     message="This email is already taken!"
  * )
  */
-class User implements UserInterface
+class User extends BaseUser implements UserInterface
 {
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
+
+//    /**
+//     * @ORM\Column(type="string", length=30)
+//     */
+//    protected $username;
+//
+//    /**
+//     * @ORM\Column(type="string", length=30)
+//     */
+//    protected $email;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $username;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $email;
+    protected $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $lastName;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $password;
+//    /**
+//     * @ORM\Column(type="string", length=100)
+//     */
+//    protected $password;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $role;
+    protected $role;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $shortDescription;
+    protected $shortDescription;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $requestedRole;
+    protected $requestedRole;
 
     /**
      * @return mixed
