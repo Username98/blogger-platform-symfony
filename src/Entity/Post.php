@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Vladislav
- * Date: 27.11.2018
- * Time: 18:04
- */
+
 
 namespace App\Entity;
 
@@ -20,8 +15,14 @@ class Post
     public function __construct()
     {
         $this->createDate = new \DateTime();
-        $this->likes = 0;
+        $this->likes = rand(0,999999);
+        $this->isActive=1;
     }
+
+    /**
+     * @return mixed
+     */
+
 
     /**
      * @ORM\Id
@@ -29,6 +30,11 @@ class Post
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $isActive;
 
     /**
      * @ORM\Column(type="string")
@@ -119,7 +125,14 @@ class Post
     {
         $this->teaser = $teaser;
     }
-
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+    public function setIsActive($isActive): void
+    {
+        $this->isActive = $isActive;
+    }
     /**
      * @return mixed
      */

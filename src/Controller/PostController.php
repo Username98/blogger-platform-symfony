@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy(array(), array('createDate' => 'DESC'));
+            ->findBy(array('isActive'=>'1'), array('createDate' => 'DESC'));
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy(array(), array('likes' => 'DESC'));
+            ->findBy( array(), array('likes' => 'DESC'));
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
@@ -51,8 +51,9 @@ class PostController extends Controller
     {
         $getPosts = $this->getDoctrine()->getRepository(Post::class)
             ->findBy(
-                array('author' => 'username'),
+                array('author' => $this->getUser()->getUsername()),
                 array('createDate' => 'DESC')
+
             );
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
