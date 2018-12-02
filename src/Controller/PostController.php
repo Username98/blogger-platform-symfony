@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy(array('isActive'=>'1'), array('createDate' => 'DESC'));
+            ->findBy(array('isActive' => '1'), array('createDate' => 'DESC'));
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
@@ -37,13 +37,12 @@ class PostController extends Controller
     {
         $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy( array(), array('likes' => 'DESC'));
+            ->findBy(array('isActive' => '1'), array('likes' => 'DESC'));
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
         return $this->render('post/popular.html.twig', ['posts' => $posts]);
     }
-
     /**
      * @Route("/post/my", name="my_posts", methods="GET")
      */
@@ -53,7 +52,6 @@ class PostController extends Controller
             ->findBy(
                 array('author' => $this->getUser()->getUsername()),
                 array('createDate' => 'DESC')
-
             );
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator = $this->get('knp_paginator');
@@ -70,6 +68,7 @@ class PostController extends Controller
     public function new(Request $request): Response
     {
         $post = new Post();
+        $post->setAuthor($this->getUser()->getUsername());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

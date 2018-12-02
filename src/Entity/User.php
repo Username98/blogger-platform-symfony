@@ -24,6 +24,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+    public function __construct()
+    {
+        $this->shortDescription = 'shortDesc';
+            }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

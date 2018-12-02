@@ -16,13 +16,12 @@ class Post
     {
         $this->createDate = new \DateTime();
         $this->likes = rand(0,999999);
-        $this->isActive=1;
-    }
+
+     }
 
     /**
      * @return mixed
      */
-
 
     /**
      * @ORM\Id
@@ -32,7 +31,7 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
     private $isActive;
 
