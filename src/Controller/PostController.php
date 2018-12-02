@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,47 +13,53 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 /**
  * @Route("/post")
  */
-class PostController extends AbstractController
+class PostController extends Controller
 
 {
-
     /**
      * @Route("/", name="post_index", methods="GET")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $posts = $this->getDoctrine()
+        $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
             ->findBy(array(), array('createDate' => 'DESC'));
+        /* @var $paginator \Knp\Component\Pager\Paginator */
+        $paginator = $this->get('knp_paginator');
+        $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
         return $this->render('post/index1.html.twig', ['posts' => $posts]);
     }
 
     /**
      * @Route("/post/popular", name="post_popular", methods="GET")
      */
-    public function getPopular(): Response
+    public function getPopular(Request $request): Response
     {
-        $posts = $this->getDoctrine()
+        $getPosts = $this->getDoctrine()
             ->getRepository(Post::class)
             ->findBy(array(), array('likes' => 'DESC'));
+        /* @var $paginator \Knp\Component\Pager\Paginator */
+        $paginator = $this->get('knp_paginator');
+        $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
         return $this->render('post/popular.html.twig', ['posts' => $posts]);
     }
+
     /**
      * @Route("/post/my", name="my_posts", methods="GET")
      */
-    public function getMyPosts(): Response
+    public function getMyPosts(Request $request): Response
     {
-        $posts = $this->getDoctrine()->getRepository(Post::class)
-        ->findBy(
-            array('author' => 'я'),
-            array('createDate' => 'DESC')
-        );
-//        $posts = $this->getDoctrine()
-//            ->getRepository(Post::class)
-//            ->findBy(array(), array('author' => 'я'));
+        $getPosts = $this->getDoctrine()->getRepository(Post::class)
+            ->findBy(
+                array('author' => 'username'),
+                array('createDate' => 'DESC')
+            );
+        /* @var $paginator \Knp\Component\Pager\Paginator */
+        $paginator = $this->get('knp_paginator');
+        $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
         return $this->render('post/myPosts.html.twig', ['posts' => $posts]);
     }
-        /**
+    /**
      * @return string
      */
 

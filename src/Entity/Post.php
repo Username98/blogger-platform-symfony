@@ -57,7 +57,7 @@ class Post
     private $author;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $createDate;
 

@@ -92,7 +92,7 @@
                     </a>
                     <p class="post-meta">Posted by
                         <a href="#">{{ post.author }}</a>
-                        {{ post.createDate ? post.createDate|date('Y-m-d') : '' }}</p>
+                        {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
                 </div>
             {% else %}
                 <div>no records found</div>
@@ -100,7 +100,7 @@
             <hr>
             <!-- Pager -->
             <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+                {{ knp_pagination_render(posts) }}
             </div>
         </div>
     </div>
