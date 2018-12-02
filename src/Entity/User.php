@@ -4,10 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Validator\Constraints;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * User
+ *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="This username is already taken!"
+ * )
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="This email is already taken!"
+ * )
  */
 class User implements UserInterface
 {
@@ -47,6 +60,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=20)
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $shortDescription;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $requestedRole;
 
     /**
      * @return mixed
@@ -162,6 +185,39 @@ class User implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * @param mixed $shortDescription
+     */
+    public function setShortDescription($shortDescription): void
+    {
+        $this->shortDescription = $shortDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequestedRole()
+    {
+        return $this->requestedRole;
+    }
+
+    /**
+     * @param mixed $requestedRole
+     */
+    public function setRequestedRole($requestedRole): void
+    {
+        $this->requestedRole = $requestedRole;
+    }
+
+
+    /**
      * Returns the roles granted to the user.
      *
      *     public function getRoles()
@@ -180,6 +236,7 @@ class User implements UserInterface
         return [
             'ROLE_USER',
             'ROLE_ADMIN',
+            'ROLE_BLOGGER'
         ];
         // TODO: Implement getRoles() method.
     }
@@ -205,5 +262,9 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function serialize(){
+
     }
 }
