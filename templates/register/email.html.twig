@@ -1,0 +1,10 @@
+{% block subject %}
+    Email confirmation
+{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+    Hello {{ user.username }}!
+    You can confirm your email by accessing {{ confirmationUrl }}
+    {% endautoescape %}
+{% endblock %}
