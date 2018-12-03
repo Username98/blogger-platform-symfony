@@ -52,7 +52,7 @@ class RegisterController extends AbstractController
                 array('user'=>$user, 'confirmationUrl'=>'http://bloggersplatform.loc/register/confirm/'.$user->getConfirmationToken()));
             $transport = (new Swift_SmtpTransport('ssl://smtp.gmail.com', 465))
                 ->setUsername('pivchenko.stas.1999@gmail.com')
-                ->setPassword('Stas_10041999')
+                ->setPassword('stas10041999')
             ;
 
             // Create the Mailer using your created Transport
