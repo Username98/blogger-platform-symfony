@@ -17,8 +17,9 @@ class PostType extends AbstractType
             ->add('content')
             ->add('teaser')
             //  ->add('likes')
-            ->add('author')
+           // ->add('author')
             // ->add('createDate')
+            ->add('isActive')
             ->add('imagePreview', FileType::class,array('data_class' => null));
     }
 

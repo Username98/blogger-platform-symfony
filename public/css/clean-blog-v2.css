@@ -431,6 +431,7 @@ footer .copyright {
 }
 
 .like {
+    margin-top: -30px;
     cursor: pointer;
     width: 30px;
     height: 30px;

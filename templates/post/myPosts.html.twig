@@ -20,7 +20,9 @@
                     </a>
                     <p class="post-meta">Posted by
                         <a href="#">{{ post.author }}</a>
-                        {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
+                        {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}
+                    </p>
+                    <div class="like"><span class="counter">{{ post.likes }}</span></div>
                 </div>
             {% else %}
                 <div>no records found</div>
