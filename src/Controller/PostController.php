@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * @Route("/post")
@@ -43,6 +46,7 @@ class PostController extends Controller
         $posts = $paginator->paginate($getPosts, $request->query->getInt('page', 1), 10);
         return $this->render('post/popular.html.twig', ['posts' => $posts]);
     }
+
     /**
      * @Route("/post/my", name="my_posts", methods="GET")
      */
@@ -96,11 +100,27 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="post_show", methods="GET")
+     * @Route("/{id}", name="post_show" )
      */
-    public function show(Post $post): Response
+    public function show(Post $post, Request $request, ObjectManager $manager): Response
     {
-        return $this->render('post/show1.html.twig', ['post' => $post]);
+        $comment = new Comment();
+        $comment->setAuthor($this->getUser()->getUsername());
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment->setCreatedAt(new \DateTime())
+                ->setPost($post);
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+        return $this->render('post/show1.html.twig', ['post' => $post, 'commentForm' => $form->createView()]);
     }
 
     /**

@@ -3,8 +3,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\Collection;
+
 
 /**
  * @ORM\Entity()
@@ -16,7 +19,7 @@ class Post
     {
         $this->createDate = new \DateTime();
         $this->likes = rand(0,999999);
-
+        $this->comments = new ArrayCollection();
      }
 
     /**
@@ -30,6 +33,10 @@ class Post
      */
     private $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
+     */
+    private $comments;
     /**
      * @ORM\Column(type="boolean")
      */
@@ -176,6 +183,33 @@ class Post
     public function setImagePreview($imagePreview)
     {
         $this->imagePreview = $imagePreview;
+        return $this;
+    }
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
+
         return $this;
     }
 
