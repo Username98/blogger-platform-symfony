@@ -281,11 +281,7 @@ class User implements AdvancedUserInterface
      */
     public function getRoles()
     {
-        return [
-            'ROLE_USER',
-            'ROLE_ADMIN',
-            'ROLE_BLOGGER'
-        ];
+        return array($this->getRole());
         // TODO: Implement getRoles() method.
     }
 

@@ -33,8 +33,21 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-
-        # - { path: ^/login, roles: IS_AUTHENTICATED_ANONIMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/login$, allow_if: "not has_role('ROLE_USER')" }
+        - { path: ^/register, allow_if: "not has_role('ROLE_USER')" }
+        - { path: ^/post/my, roles: ROLE_BLOGGER }
+        - { path: ^/post/new, roles: ROLE_BLOGGER }
+#        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONIMOUSLY }
+#        - { path: ^/register, roles: IS_AUTHENTICATED_ANONIMOUSLY }
+#        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY && !IS_AUTHENTICADED_FULLY }
+#        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY && !IS_AUTHENTICADED_FULLY }
         # - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    role_hierarchy:
+        ROLE_USER:        ROLE_USER
+        ROLE_BLOGGER:     [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 

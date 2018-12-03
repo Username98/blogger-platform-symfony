@@ -41,19 +41,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('post_popular') }}">Popular</a>
                     </li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('post_index') }}">Preferences</a>
                     </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_BLOGGER') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('my_posts') }}">My Posts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('post_new') }}">New Post</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="" class="navbar-brand">{{ app.user.username }}</a>
+                <a href="{{ path('profile') }}" class="navbar-brand">{{ app.user.username }}</a>
                 <a href="{{ logout_path() }}" class="navbar-brand">Logout</a>
             {% else %}
                 <a href="{{ path('login') }}" class="navbar-brand">Sign In</a>
