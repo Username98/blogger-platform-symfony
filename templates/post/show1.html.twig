@@ -1,68 +1,131 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        .thumbnail {
+            padding: 0px;
+        }
+
+        .panel {
+            position: relative;
+        }
+
+        .panel > .panel-heading:after, .panel > .panel-heading:before {
+            position: absolute;
+            top: 11px;
+            left: -16px;
+            right: 100%;
+            width: 0;
+            height: 0;
+            display: block;
+            content: " ";
+            border-color: transparent;
+            border-style: solid solid outset;
+            pointer-events: none;
+        }
+
+        .panel > .panel-heading:after {
+            border-width: 7px;
+            border-right-color: #f7f7f7;
+            margin-top: 1px;
+            margin-left: 2px;
+        }
+
+        .panel > .panel-heading:before {
+            border-right-color: #ddd;
+            border-width: 8px;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-preview">
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
 
-                <h2 class="post-title">
-                    {{ post.header }}
-                </h2>
-                <h3 class="post-subtitle">
-                    {{ post.teaser }}
-                </h3>
-                <h1>
-                    <img style="max-width: 800px" src="{{ asset('uploads/images/' ~ post.imagePreview) }}">
-                </h1>
-                <p>{{ post.content }}</p>
-                </a>
-                <p class="post-meta">Posted by
-                    <a href="#">{{ post.author }}</a>
-                    {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
-                <a href="{{ path('post_edit', {'id': post.id}) }}"><h2>edit</h2></a>
-            </div>
-            <section id="comments">
-                <p>{{ post.comments |length }} Comments :</p>
-                {% for comment in post.comments %}
-<div class="post-preview">
-    <p class="post-meta">   {{ comment.author }} ({{ comment.createdAt | date('Y-m-d  H:i:s') }}):<br><h3>{{ comment.content | raw }}</h3></p>
+                    <h2 class="post-title">
+                        {{ post.header }}
+                    </h2>
+                    <h3 class="post-subtitle">
+                        {{ post.teaser }}
+                    </h3>
+                    <h1>
+                        <img style="max-width: 800px" src="{{ asset('uploads/images/' ~ post.imagePreview) }}">
+                    </h1>
+                    <p>{{ post.content }}</p>
+                    </a>
+                    <p class="post-meta">Posted by
+                        <a href="#">{{ post.author }}</a>
+                        {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
+                    <a href="{{ path('post_edit', {'id': post.id}) }}"><h2>edit</h2></a>
+                </div>
+                <section id="comments">
+                    <p>{{ post.comments |length }} Comments :</p>
+                    {% for comment in post.comments %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="thumbnail">
+                                    <img class="img-responsive user-photo"
+                                         src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div><!-- /thumbnail -->
+                            </div><!-- /col-sm-1 -->
 
-</div>
+                            <div class="col-sm-5">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{{ comment.author }}</strong> <span
+                                                class="text-muted">{{ comment.createdAt | date('Y-m-d  H:i:s') }}</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        {{ comment.content | raw }}
+                                    </div><!-- /panel-body -->
+                                </div><!-- /panel panel-default -->
+                            </div><!-- /col-sm-5 -->
+                        </div><!-- /container -->
+                    </div>
+                </section>
 
 
                 {% endfor %}
                 {% if app.user %}
                     {{ form_start(commentForm) }}
-                  {#  {{ form_row(commentForm.author, {'attr': {'placeholder': 'Your name'}} ) }}#}
-                    {{ form_row(commentForm.content, {'attr': {'placeholder': 'Your comment'}} ) }}
+                    {#  {{ form_row(commentForm.author, {'attr': {'placeholder': 'Your name'}} ) }}#}
+                    {#{{ form_row(commentForm.content, {'attr': {'placeholder': 'Your comment'}} ) }}#}
+                    {{ form_label(commentForm.content)}}
+                    {{ form_widget(commentForm.content, {'attr': {'class': 'form-control'}}) }}
+                    <br>
                     <button type="submit" class="btn btn-success">Send!</button>
                     {{ form_end(commentForm) }}
-                {#{% else %}#}
+                    {#{% else %}#}
                     {#<h2>You can not comment if you are not logged in. </h2>#}
                     {#<a href="{{ path('security_login') }}" class="btn btn-success">Connexion</a>#}
                 {% endif %}
-            </section>
-            <hr>
+                <hr>
+                <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
+                      id="bootstrap-css">
+                <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                <!------ Include the above in your HEAD tag ---------->
+            </div>
         </div>
     </div>
-</div>
 
-<hr>
+    <hr>
 {% endblock %}
 {% block javascripts %}
 
-<!-- Bootstrap core JavaScript -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 
-<!-- Custom scripts for this template -->
-<script src="/js/clean-blog.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="/js/clean-blog.js"></script>
 {% endblock %}
