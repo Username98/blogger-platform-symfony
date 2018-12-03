@@ -105,13 +105,13 @@ class PostController extends Controller
     public function show(Post $post, Request $request, ObjectManager $manager): Response
     {
         $comment = new Comment();
-        $comment->setAuthor($this->getUser()->getUsername());
+
         $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $comment->setAuthor($this->getUser()->getUsername());
             $comment->setCreatedAt(new \DateTime())
                 ->setPost($post);
 
