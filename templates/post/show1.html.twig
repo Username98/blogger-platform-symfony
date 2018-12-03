@@ -53,11 +53,15 @@
                         <img style="max-width: 800px" src="{{ asset('uploads/images/' ~ post.imagePreview) }}">
                     </h1>
                     <p>{{ post.content }}</p>
-                    </a>
+
                     <p class="post-meta">Posted by
                         <a href="#">{{ post.author }}</a>
                         {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
+                    {{ app.user.username }}
+                    {{ post.author }}
+                    {% if post.author == app.user.username %}
                     <a href="{{ path('post_edit', {'id': post.id}) }}"><h2>edit</h2></a>
+                    {% endif %}
                 </div>
                 <section id="comments">
                     <p>{{ post.comments |length }} Comments :</p>
