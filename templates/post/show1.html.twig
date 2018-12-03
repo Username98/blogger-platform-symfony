@@ -20,8 +20,29 @@
                 <p class="post-meta">Posted by
                     <a href="#">{{ post.author }}</a>
                     {{ post.createDate ? post.createDate|date('Y-m-d H:i:s') : '' }}</p>
-                <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a>
+                <a href="{{ path('post_edit', {'id': post.id}) }}"><h2>edit</h2></a>
             </div>
+            <section id="comments">
+                <p>{{ post.comments |length }} Comments :</p>
+                {% for comment in post.comments %}
+<div class="post-preview">
+    <p class="post-meta">   {{ comment.author }} ({{ comment.createdAt | date('Y-m-d  H:i:s') }}):<br><h3>{{ comment.content | raw }}</h3></p>
+
+</div>
+
+
+                {% endfor %}
+                {% if app.user %}
+                    {{ form_start(commentForm) }}
+                  {#  {{ form_row(commentForm.author, {'attr': {'placeholder': 'Your name'}} ) }}#}
+                    {{ form_row(commentForm.content, {'attr': {'placeholder': 'Your comment'}} ) }}
+                    <button type="submit" class="btn btn-success">Send!</button>
+                    {{ form_end(commentForm) }}
+                {% else %}
+                    <h2>You can not comment if you are not logged in. </h2>
+                    <a href="{{ path('security_login') }}" class="btn btn-success">Connexion</a>
+                {% endif %}
+            </section>
             <hr>
         </div>
     </div>
